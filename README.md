@@ -1,6 +1,6 @@
 # Create Script
 
-![License](https://img.shields.io/github/license/mxg-mega/createscript)
+![License](https://img.shields.io/github/license/mxg-mega/create)
 ![Version](https://img.shields.io/badge/version-1.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Linux-blue)
 
