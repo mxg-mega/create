@@ -1,6 +1,6 @@
 # Create Script
 
-![License](https://img.shields.io/github/license/yourusername/createscript)
+![License](https://img.shields.io/github/license/mxg-mega/createscript)
 ![Version](https://img.shields.io/badge/version-1.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Linux-blue)
 
@@ -18,14 +18,14 @@ A simple and powerful Bash script that creates files, makes them executable, and
 ### Method 1: Clone the Repository
 
 ```bash
-git clone https://github.com/mxg-mega/createscript.git
-cd createscript
-sudo chmod +x create.sh
+git clone https://github.com/mxg-mega/create.git
+cd create
+sudo chmod +x create
 ```
 
 Add the script to your PATH:
 ```
-sudo mv create.sh /usr/local/bin/create
+sudo mv create /usr/local/bin/create
 ```
 
 ### Method 2: Install via apt (Coming Soon)
