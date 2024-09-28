@@ -1,0 +1,104 @@
+#!/bin/bash
+# A simple program that creates files and opens the file you want in your favorite editor
+
+# Default editor is vim
+EDITOR="vim"
+
+# Declare available editors
+declare -A editors
+editors=(
+    ["-v"]="code"   # VS Code Editor
+    ["-e"]="emacs"  # Emacs
+    ["-n"]="nano"   # Nano
+    ["-s"]="subl"   # Sublime Text
+    # Add more editors if needed
+)
+
+# Function to display help
+display_help() {
+    echo "Create Script"
+    echo "================"
+    echo ""
+    echo "A simple and powerful script to create files and open them in your favorite editor."
+    echo ""
+    echo "Usage:"
+    echo "  create [options] filename"
+    echo "  create [options] filename1 filename2 ..."
+    echo ""
+    echo "Options:"
+    echo "  -h, --help      Display this help message and exit."
+    echo "  -x              Make the file executable."
+    echo "  -v, -e, -s, -n  Specify the editor to use (vscode, emacs, sublime, nano)."
+    echo ""
+    echo "Examples:"
+    echo "  create file.txt"
+    echo "  create -x file.sh"
+    echo "  create -e file.txt"
+    echo "  create -v file.txt"
+    exit 0
+}
+
+# Parse options
+EXECUTABLE=false
+editor_opts=0
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help) 
+            display_help
+            ;;
+        -x) 
+            EXECUTABLE=true
+            shift
+            ;;
+        -v|-e|-s|-n) 
+            if [[ $editor_opts -gt 0 ]]; then
+                echo "Only one editor option can be used."
+                exit 1
+            fi
+            EDITOR=${editors[$1]}
+            editor_opts=$((editor_opts + 1))
+            shift
+            ;;
+        --) 
+            shift
+            break
+            ;;
+        -*) 
+            echo "Invalid option: $1"
+            exit 1
+            ;;
+        *) 
+            break
+            ;;
+    esac
+done
+
+# Check if there are no file names
+if [ $# -eq 0 ]; then
+    echo "Please provide a filename or filenames as arguments."
+    exit 1
+fi
+
+# Create files and possibly make them executable
+for file in "$@"; do
+    if [ ! -f "$file" ]; then
+        touch "$file"
+        echo "Created file: $file"
+    else
+        echo "File already exists: $file"
+    fi
+
+    # Check if it should be executable
+    if [ "$EXECUTABLE" = true ]; then
+        chmod +x "$file"
+        echo "Made executable: $file"
+    fi
+done
+
+# Open the first file with the chosen editor
+if ! "$EDITOR" "$1"; then
+    echo "Failed to open file with $EDITOR. Please ensure the editor is installed."
+    exit 1
+fi
+
